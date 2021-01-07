@@ -366,7 +366,7 @@ class JdSeckill(object):
 
         # 初始化信息
         self.sku_id = global_config.getRaw('config', 'sku_id')
-        self.seckill_num = 1
+        self.seckill_num = 2
         self.seckill_init_info = dict()
         self.seckill_url = dict()
         self.seckill_order_data = dict()
@@ -380,7 +380,7 @@ class JdSeckill(object):
 
     def login_by_qrcode(self):
         """
-        二维码登陆
+        二维码登录
         :return:
         """
         if self.qrlogin.is_login:
@@ -397,12 +397,12 @@ class JdSeckill(object):
 
     def check_login_and_jdtdufp(func):
         """
-        用户登陆态校验装饰器。若用户未登陆，则调用扫码登陆
+        用户登陆态校验装饰器。若用户未登录，则调用扫码登录
         """
         @functools.wraps(func)
         def new_func(self, *args, **kwargs):
             if not self.qrlogin.is_login:
-                logger.info("{0} 需登陆后调用，开始扫码登陆".format(func.__name__))
+                logger.info("{0} 需登录后调用，开始扫码登录".format(func.__name__))
                 self.login_by_qrcode()
             if not self.jd_tdufp.is_init:
                 self.jd_tdufp.init_jd_tdudfp()
